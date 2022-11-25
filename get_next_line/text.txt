@@ -1,0 +1,51 @@
+ssize_t	ft_check(char *str, ssize_t str_len, t_lst *lst, t_fd_lst *fd_lst);
+		read_buf(t_fd_lst *fd_lst, t_lst *lst, )
+
+1. fd 찾기()
+	-> fd_lst != 0 : 리스트 돌면서 fd 찾기
+	-> fd_lst == 0 or 다 돌았을 때 : 새로 할당 후 추가
+2. fd_lst->str != NULL?
+	-> yes : 2-1. str 속에 \n이 있나?
+				-> yes : 1. \n까지 메모리 주고 할당. 2. 원래 메모리(fd_lst->str) 해제. 3. if 뒷부분 있으면 새로운 메모리 할당(rest), 원래 메모리에 주기. else 뒷부분 없으면 원래 메모리 = NULL / 함수 종료(return)
+				-> no : lst에 노드 추가 후 node->str = fd_lst->str, lst->sum += str_len(fd_lst->str). fd_lst->str = NULL
+
+			2-1.
+				ssize_t	len = ft_check(str, str_len, lst, fd_lst);
+				len == -1 -> 리스트 해제 후 return 0;
+				** if문 바꿔서 중복되는 부분 제거)
+				if (len == str_len) // 개행 안나왔을때
+					-> len = read_buf(); // 개행 나올 때까지 버퍼 읽어들이기
+				ret = 0;
+				if (len >= 0)
+					ret = ft_getstr
+				리스트 해제
+				return ret;
+
+				(if (len != str_len) -> 리스트에 앞부분 추가, fd_lst->str에 메모리 관리도 해결 **ft_check값 따로 저장할 변수?
+				-> yes : (ft_getstr) 1. 리스트 속 str 모두 합치기(할당 실패 안 한 경우에) 2. 리스트 모두 해제 하기(ft_lstclear) 3. 리턴하기(str)
+				-> no : pass
+
+	len = read_buf();
+	ret = 0;
+	if (len >= 0) // 오류 발생 시 -> 리스트 모두 해제 후 리턴
+		ret = ft_getstr(리스트 속 str 모두 합치기);
+	리스트 모두 해제
+	return ret;
+3. 버퍼 읽으면서 추가하기(read_buf)
+	buf = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (buf == NULL)
+		return (-1);
+	read_len = read(fd, buf, BUFFER_SIZE);
+	while (read_len > 0)
+	{
+		ssize_t	len = ft_check(buf, read_len, lst, fd_lst);
+		len == -1 -> free(buf); return (-1);
+		3-1. buf 속에 \n이 있나? + EOF 도달했나? -> if (len != read_len || read_len < BUFFER_SIZE)
+			-> yes : break;
+		read_len = read(fd, buf, BUFFER_SIZE);
+	}
+	free(buf);
+	return (read_len);
+
+4. str 생성하고, 리스트 해제하고 리턴 str
+
