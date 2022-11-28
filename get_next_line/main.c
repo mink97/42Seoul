@@ -14,5 +14,7 @@ int main(void)
 		printf("line : %s\n",line);
 		free(line);
 	}
+	printf("line : %s\n",line);
+	free(line);
 	return (0);
 }

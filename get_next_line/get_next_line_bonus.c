@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mingkang <mingkang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/21 09:02:48 by mingkang          #+#    #+#             */
-/*   Updated: 2022/11/26 18:15:02 by mingkang         ###   ########.fr       */
+/*   Created: 2022/11/25 19:54:05 by mingkang          #+#    #+#             */
+/*   Updated: 2022/11/26 18:15:16 by mingkang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/syslimits.h>
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*get_next_line(int fd)
 {
