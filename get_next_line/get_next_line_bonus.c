@@ -6,7 +6,7 @@
 /*   By: mingkang <mingkang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 19:54:05 by mingkang          #+#    #+#             */
-/*   Updated: 2022/11/26 18:15:16 by mingkang         ###   ########.fr       */
+/*   Updated: 2022/11/30 10:41:13 by mingkang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,19 @@ char	*get_next_line(int fd)
 	char		*ret;
 	t_lst		*lst;
 	ssize_t		len;
+	char		*buf;
 
 	if (BUFFER_SIZE <= 0 || fd < 0 || fd >= OPEN_MAX)
 		return (0);
 	lst = ft_init_lst(fd_arr + fd);
-	if (lst == 0)
-		return (0);
+	if (lst == NULL)
+		return (NULL);
+	buf = malloc(sizeof(char) * (BUFFER_SIZE));
 	if (fd_arr[fd] != NULL)
-	{
-		len = ft_check(lst, fd_arr[fd], ft_strlen(fd_arr[fd]), fd);
-		free(fd_arr[fd]);
-		fd_arr[fd] = NULL;
-	}
+		len = ft_check(lst, fd, &fd_arr[fd], buf);
 	else
-		len = read_buf(lst, fd);
+		len = read_buf(lst, fd, buf);
+	free(buf);
 	ret = 0;
 	if (len > 0)
 		ret = ft_getstr(lst, &fd_arr[fd]);
@@ -41,40 +40,52 @@ char	*get_next_line(int fd)
 	return (ret);
 }
 
-ssize_t	ft_check(t_lst *lst, char *str, ssize_t str_len, int fd)
+ssize_t	ft_check(t_lst *lst, int fd, char **str, char *buf)
 {
 	ssize_t	i;
 	ssize_t	check;
+	ssize_t	str_len;
 
 	i = 0;
-	while (i < str_len && str[i++] != '\n')
+	str_len = ft_strlen(*str);
+	while (i < str_len && (*str)[i++] != '\n')
 		;
 	lst->sum += i;
-	check = ft_addlst(lst, str, str_len);
+	check = ft_addlst(lst, *str, str_len);
+	if (check != -1 && (*str)[i - 1] != '\n')
+		check = read_buf(lst, fd, buf);
+	free(*str);
+	*str = NULL;
 	if (check == -1)
 		return (-1);
-	if (str[i - 1] != '\n')
-	{
-		check = read_buf(lst, fd);
-		if (check == -1)
-			return (-1);
-	}
-	return (i);
+	return (lst->sum);
 }
 
-ssize_t	read_buf(t_lst *lst, int fd)
+ssize_t	read_buf(t_lst *lst, int fd, char *buf)
 {
-	char	*buf;
 	ssize_t	read_len;
+	ssize_t	check;
+	ssize_t	i;
 
-	buf = malloc(sizeof(char) * (BUFFER_SIZE));
 	if (buf == NULL)
 		return (-1);
 	read_len = read(fd, buf, BUFFER_SIZE);
-	if (read_len > 0)
-		read_len = ft_check(lst, buf, read_len, fd);
-	free(buf);
-	return (read_len);
+	while (read_len > 0)
+	{
+		i = 0;
+		while (i < read_len && buf[i++] != '\n')
+			;
+		lst->sum += i;
+		check = ft_addlst(lst, buf, read_len);
+		if (check == -1)
+			return (-1);
+		if (buf[i - 1] == '\n')
+			break ;
+		read_len = read(fd, buf, BUFFER_SIZE);
+	}
+	if (read_len < 0)
+		return (-1);
+	return (lst->sum);
 }
 
 char	*ft_getstr(t_lst *lst, char **fd_str)

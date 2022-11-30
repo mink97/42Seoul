@@ -6,7 +6,7 @@
 /*   By: mingkang <mingkang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 19:54:23 by mingkang          #+#    #+#             */
-/*   Updated: 2022/11/26 16:53:59 by mingkang         ###   ########.fr       */
+/*   Updated: 2022/11/29 19:28:07 by mingkang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,12 @@ t_lst	*ft_init_lst(char **fd_arr)
 	}
 	lst->sum = 0;
 	lst->head_node.next = NULL;
+	lst->tail_node = NULL;
 	return (lst);
 }
 
 ssize_t	ft_addlst(t_lst *lst, char *str, size_t str_len)
 {
-	t_lnode	*node;
 	t_lnode	*new_node;
 	char	*new_str;
 
@@ -76,10 +76,16 @@ ssize_t	ft_addlst(t_lst *lst, char *str, size_t str_len)
 	}
 	new_node->str = new_str;
 	new_node->next = NULL;
-	node = &(lst->head_node);
-	while (node->next != NULL)
-		node = node->next;
-	node->next = new_node;
+	if (lst->tail_node == NULL)
+	{
+		lst->head_node.next = new_node;
+		lst->tail_node = new_node;
+	}
+	else
+	{
+		lst->tail_node->next = new_node;
+		lst->tail_node = new_node;
+	}
 	return (str_len);
 }
 
