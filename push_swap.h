@@ -6,7 +6,7 @@
 /*   By: mingkang <mingkang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 17:19:32 by mingkang          #+#    #+#             */
-/*   Updated: 2022/12/02 17:14:27 by mingkang         ###   ########.fr       */
+/*   Updated: 2022/12/11 16:41:35 by mingkang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ typedef struct s_deque
 	t_node	*tail;
 }	t_deque;
 
-typedef struct s_best_case
+typedef struct s_rotate
 {
 	int		idx;
-	int		left_rotate;
-	int		right_rotate;
-	int		total_rotate;
-}	t_best_case;
+	int		left_rot;
+	int		right_rot;
+	int		total_rot;
+}	t_rotate;
 
 enum e_operation
 {
@@ -57,14 +57,24 @@ enum e_operation
 	rrr
 };
 
+void		execute_best(t_deque *deq_a, t_deque *deq_b, t_rotate best);
+void		handover_b_to_a(t_deque *deq_b, t_deque *deq_a);
+void		sort_3(t_deque *deq);
+void		sort_5(t_deque *deq_a, t_deque *deq_b);
+void		hard_coding(t_deque *deq_a, t_deque *deq_b);
+
 // libft_utils.c
 long long	ft_atoi(const char *str);
+int			get_max(int a, int b);
+int			get_min(int a, int b);
+int			absl(int a);
+void		handover_a_to_b(t_deque *deq_a, t_deque *deq_b);
 
 // opration.c
 void		swap(t_deque *deque, int act);
 void		push(t_deque *src_deq, t_deque *dst_deq, int act);
 void		rotate(t_deque *deq, int act);
-void		swap_both(t_deque *deq_a, t_deque *deq_b, int act);
+void		swap_both(t_deque *deq_a, t_deque *deq_b);
 void		rotate_both(t_deque *deq_a, t_deque *deq_b, int act);
 
 // init_deque.c

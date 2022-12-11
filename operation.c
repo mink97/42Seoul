@@ -6,7 +6,7 @@
 /*   By: mingkang <mingkang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 09:25:41 by mingkang          #+#    #+#             */
-/*   Updated: 2022/12/02 14:59:22 by mingkang         ###   ########.fr       */
+/*   Updated: 2022/12/10 11:00:22 by mingkang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	swap(t_deque *deq, int act)
 		write(1, "sb\n", 3);
 }
 
-void	swap_both(t_deque *deq_a, t_deque *deq_b, int act)
+void	swap_both(t_deque *deq_a, t_deque *deq_b)
 {
 	t_node	*tmp1;
 	t_node	*tmp2;

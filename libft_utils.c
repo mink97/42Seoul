@@ -6,19 +6,7 @@
 /*   By: mingkang <mingkang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 15:53:40 by mingkang          #+#    #+#             */
-/*   Updated: 2022/12/02 17:04:25 by mingkang         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mingkang <mingkang@student.42seoul.kr>     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/09 16:29:09 by mingkang          #+#    #+#             */
-/*   Updated: 2022/12/01 19:33:59 by mingkang         ###   ########.fr       */
+/*   Updated: 2022/12/11 17:41:18 by mingkang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +38,28 @@ long long	ft_atoi(const char *str)
 	if (str[i] != 0 || str[i - 1] == '-' || str[i - 1] == '+')
 		gen_error();
 	return (num * neg);
+}
+
+int	get_max(int a, int b)
+{
+	if (a > b)
+		return (a);
+	else
+		return (b);
+}
+
+int	get_min(int a, int b)
+{
+	if (a < b)
+		return (a);
+	else
+		return (b);
+}
+
+int	absl(int a)
+{
+	if (a < 0)
+		return (-a);
+	else
+		return (a);
 }
