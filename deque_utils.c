@@ -1,29 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   deque.c                                            :+:      :+:    :+:   */
+/*   deque_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mingkang <mingkang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/01 09:45:21 by mingkang          #+#    #+#             */
-/*   Updated: 2022/12/11 13:32:14 by mingkang         ###   ########.fr       */
+/*   Created: 2022/12/12 10:39:50 by mingkang          #+#    #+#             */
+/*   Updated: 2022/12/12 13:35:00 by mingkang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-t_deque	*create_deque(void)
-{
-	t_deque	*deq;
-
-	deq = malloc(sizeof(t_deque));
-	if (deq == NULL)
-		gen_error();
-	deq->cnt = 0;
-	deq->head = NULL;
-	deq->tail = NULL;
-	return (deq);
-}
 
 t_node	*create_node(int element)
 {
@@ -38,7 +25,7 @@ t_node	*create_node(int element)
 	return (new_node);
 }
 
-int	push_front(t_deque *deq, t_node *new_node)
+void	push_front(t_deque *deq, t_node *new_node)
 {
 	if (deq->head == NULL && deq->tail == NULL)
 	{
@@ -52,10 +39,9 @@ int	push_front(t_deque *deq, t_node *new_node)
 		deq->head = new_node;
 	}
 	deq->cnt++;
-	return (TRUE);
 }
 
-int	push_rear(t_deque *deq, t_node *new_node)
+void	push_rear(t_deque *deq, t_node *new_node)
 {
 	if (deq->head == NULL && deq->tail == NULL)
 	{
@@ -69,7 +55,6 @@ int	push_rear(t_deque *deq, t_node *new_node)
 		deq->tail = new_node;
 	}
 	deq->cnt++;
-	return (TRUE);
 }
 
 t_node	*pop_front(t_deque *deq)
@@ -114,23 +99,4 @@ t_node	*pop_rear(t_deque *deq)
 	}
 	deq->cnt--;
 	return (ret_node);
-}
-
-#include <stdio.h>
-void	show_deque(t_deque *deq)
-{
-	t_node	*p_node;
-
-	if (deq == NULL)
-	{
-		printf("show_deque() error\n");
-		return ;
-	}
-	p_node = deq->head;
-	while (p_node != NULL)
-	{
-		printf("[%d]\n", p_node->data);
-		p_node = p_node->next;
-	}
-	printf("---------------------------------\n");
 }

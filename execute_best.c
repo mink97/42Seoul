@@ -6,13 +6,13 @@
 /*   By: mingkang <mingkang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 12:51:11 by mingkang          #+#    #+#             */
-/*   Updated: 2022/12/11 17:41:45 by mingkang         ###   ########.fr       */
+/*   Updated: 2022/12/12 13:20:18 by mingkang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	execute_rr(t_deque *deq_a, t_deque *deq_b, t_rotate best)
+static void	execute_rr(t_deque *deq_a, t_deque *deq_b, t_rotate best)
 {
 	while (best.left_rot != 0 && best.right_rot != 0)
 	{
@@ -32,7 +32,7 @@ void	execute_rr(t_deque *deq_a, t_deque *deq_b, t_rotate best)
 	}
 }
 
-void	execute_rrr(t_deque *deq_a, t_deque *deq_b, t_rotate best)
+static void	execute_rrr(t_deque *deq_a, t_deque *deq_b, t_rotate best)
 {
 	while (best.left_rot != 0 && best.right_rot != 0)
 	{
@@ -52,7 +52,7 @@ void	execute_rrr(t_deque *deq_a, t_deque *deq_b, t_rotate best)
 	}
 }
 
-void	execute_ra_rrb(t_deque *deq_a, t_deque *deq_b, t_rotate best)
+static void	execute_ra_rrb(t_deque *deq_a, t_deque *deq_b, t_rotate best)
 {
 	while (best.left_rot != 0)
 	{
@@ -66,7 +66,7 @@ void	execute_ra_rrb(t_deque *deq_a, t_deque *deq_b, t_rotate best)
 	}
 }
 
-void	execute_rra_rb(t_deque *deq_a, t_deque *deq_b, t_rotate best)
+static void	execute_rra_rb(t_deque *deq_a, t_deque *deq_b, t_rotate best)
 {
 	while (best.left_rot != 0)
 	{
