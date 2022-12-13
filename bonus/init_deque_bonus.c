@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_deque.c                                       :+:      :+:    :+:   */
+/*   init_deque_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mingkang <mingkang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/01 09:45:21 by mingkang          #+#    #+#             */
-/*   Updated: 2022/12/12 19:59:15 by mingkang         ###   ########.fr       */
+/*   Created: 2022/12/12 17:11:46 by mingkang          #+#    #+#             */
+/*   Updated: 2022/12/13 19:51:26 by mingkang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "checker_bonus.h"
 
 static t_deque	*create_deque(void)
 {
@@ -68,14 +68,7 @@ static int	parse_argv(int argc, char **argv, int **arr)
 	if (*arr == NULL)
 		gen_error();
 	convert_to_int(*arr, argc, argv);
-	i = 0;
-	while (i < cnt - 1)
-	{
-		if ((*arr)[i] - (*arr)[i + 1] > 0)
-			return (cnt);
-		i++;
-	}
-	exit(EXIT_SUCCESS);
+	return (cnt);
 }
 
 static void	push_argv(t_deque *deq_a, int *arr, int arr_len)
