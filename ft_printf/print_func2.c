@@ -6,7 +6,7 @@
 /*   By: mingkang <mingkang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 14:03:31 by mingkang          #+#    #+#             */
-/*   Updated: 2022/11/29 14:14:08 by mingkang         ###   ########.fr       */
+/*   Updated: 2022/12/13 12:01:22 by mingkang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_strlen(char *str)
 	while (str[i] != 0)
 	{
 		i++;
-		if (i >= 2147483637)
+		if (i >= 2147483647)
 			return (-1);
 	}
 	return (i);
