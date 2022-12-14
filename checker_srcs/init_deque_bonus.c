@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_deque.c                                       :+:      :+:    :+:   */
+/*   init_deque_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mingkang <mingkang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/01 09:45:21 by mingkang          #+#    #+#             */
-/*   Updated: 2022/12/12 19:59:15 by mingkang         ###   ########.fr       */
+/*   Created: 2022/12/12 17:11:46 by mingkang          #+#    #+#             */
+/*   Updated: 2022/12/14 11:31:43 by mingkang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "checker_bonus.h"
 
 static t_deque	*create_deque(void)
 {
@@ -39,13 +39,11 @@ static void	convert_to_int(int *arr, int argc, char **argv)
 	{
 		strs = ft_split(argv[i++], ' ');
 		if (strs == NULL)
-			exit(EXIT_FAILURE);
+			gen_error();
 		k = 0;
 		while (strs[k] != NULL)
 		{
 			num = ft_atoi(strs[k]);
-			if (num > INT_MAX || num < INT_MIN)
-				exit(EXIT_FAILURE);
 			arr[j++] = (int)num;
 			free(strs[k++]);
 		}
@@ -68,14 +66,7 @@ static int	parse_argv(int argc, char **argv, int **arr)
 	if (*arr == NULL)
 		gen_error();
 	convert_to_int(*arr, argc, argv);
-	i = 0;
-	while (i < cnt - 1)
-	{
-		if ((*arr)[i] - (*arr)[i + 1] > 0)
-			return (cnt);
-		i++;
-	}
-	exit(EXIT_SUCCESS);
+	return (cnt);
 }
 
 static void	push_argv(t_deque *deq_a, int *arr, int arr_len)
