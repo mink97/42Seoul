@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_deque.c                                       :+:      :+:    :+:   */
+/*   init_deque_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mingkang <mingkang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/01 15:52:02 by mingkang          #+#    #+#             */
-/*   Updated: 2022/12/02 17:14:11 by mingkang         ###   ########.fr       */
+/*   Created: 2022/12/12 17:11:46 by mingkang          #+#    #+#             */
+/*   Updated: 2022/12/14 11:31:43 by mingkang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "checker_bonus.h"
 
-void	init_deque(int argc, char **argv, t_deque **deq_a, t_deque **deq_b)
+static t_deque	*create_deque(void)
 {
-	int	cnt;
-	int	*arr;
+	t_deque	*deq;
 
-	cnt = parse_argv(argc, argv, &arr);
-	*deq_a = create_deque();
-	*deq_b = create_deque();
-	push_argv(*deq_a, arr, cnt);
+	deq = malloc(sizeof(t_deque));
+	if (deq == NULL)
+		gen_error();
+	deq->cnt = 0;
+	deq->head = NULL;
+	deq->tail = NULL;
+	return (deq);
 }
 
-int	convert_to_int(int *arr, int argc, char **argv)
+static void	convert_to_int(int *arr, int argc, char **argv)
 {
 	int			i;
 	int			j;
@@ -31,31 +33,28 @@ int	convert_to_int(int *arr, int argc, char **argv)
 	long long	num;
 	char		**strs;
 
-	j = 0;
 	i = 0;
+	j = 0;
 	while (i < argc)
 	{
 		strs = ft_split(argv[i++], ' ');
 		if (strs == NULL)
-			exit(EXIT_FAILURE);
+			gen_error();
 		k = 0;
 		while (strs[k] != NULL)
 		{
 			num = ft_atoi(strs[k]);
-			if (num > INT_MAX || num < INT_MIN)
-				exit(EXIT_FAILURE);
 			arr[j++] = (int)num;
 			free(strs[k++]);
 		}
 		free(strs);
 	}
-	return (1);
 }
 
-int	parse_argv(int argc, char **argv, int **arr)
+static int	parse_argv(int argc, char **argv, int **arr)
 {
-	int		i;
-	size_t	cnt;
+	int	i;
+	int	cnt;
 
 	i = 0;
 	cnt = 0;
@@ -67,12 +66,10 @@ int	parse_argv(int argc, char **argv, int **arr)
 	if (*arr == NULL)
 		gen_error();
 	convert_to_int(*arr, argc, argv);
-	if (check_align(*arr, cnt) == TRUE)
-		exit(EXIT_SUCCESS);
 	return (cnt);
 }
 
-void	push_argv(t_deque *deq_a, int *arr, int arr_len)
+static void	push_argv(t_deque *deq_a, int *arr, int arr_len)
 {
 	int		i;
 	int		j;
@@ -96,16 +93,14 @@ void	push_argv(t_deque *deq_a, int *arr, int arr_len)
 	}
 }
 
-int	check_align(int *arr, int arr_len)
+void	init_deque(int argc, char **argv, t_deque **deq_a, t_deque **deq_b)
 {
-	int	i;
+	int	cnt;
+	int	*arr;
 
-	i = 0;
-	while (i < arr_len - 1)
-	{
-		if (arr[i] - arr[i + 1] > 0)
-			return (FALSE);
-		i++;
-	}
-	return (TRUE);
+	cnt = parse_argv(argc, argv, &arr);
+	*deq_a = create_deque();
+	*deq_b = create_deque();
+	push_argv(*deq_a, arr, cnt);
+	free(arr);
 }

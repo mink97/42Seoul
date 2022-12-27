@@ -6,45 +6,80 @@
 #    By: mingkang <mingkang@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/01 19:42:10 by mingkang          #+#    #+#              #
-#    Updated: 2022/12/01 19:45:40 by mingkang         ###   ########.fr        #
+#    Updated: 2022/12/14 15:58:24 by mingkang         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS	=
+SRCS_NAME	= deque_utils.c execute_best.c hand_over.c hand_over_utils.c \
+hard_code.c init_deque.c libft_utils.c operation.c push_swap.c common.c
 
-# B_SRCS	=
+SRCS_DIR	= ./push_swap_srcs/
 
-HEADER	= push_swap.h
+SRCS		= ${addprefix ${SRCS_DIR}, ${SRCS_NAME}}
 
-OBJS	= ${SRCS:.c=.o}
+OBJ_DIR 	= push_swap_objs
 
-# B_OBJS	= ${B_SRCS:.c=.o}
+OBJS		= ${addprefix ${OBJ_DIR}/, ${notdir ${SRCS:.c=.o}}}
 
-NAME	= push_swap
+NAME		= push_swap
+################################################################################
+B_SRCS_NAME	= checker_bonus.c command_bonus.c deque_utils_bonus.c \
+init_deque_bonus.c libft_utils_bonus.c operation_bonus.c \
 
-CC		= cc
+B_SRCS_DIR	= ./checker_srcs/
 
-CFLAGS	= -Wall -Wextra -Werror
+B_SRCS		= ${addprefix ${B_SRCS_DIR}, ${B_SRCS_NAME}}
 
-RM		= rm -f
+vpath %.c ${SRCS_DIR} ${B_SRCS_DIR}
+
+B_OBJ_DIR 	= checker_objs
+
+GNL		= $(B_SRCS_DIR)/get_next_line/get_next_line.a
+
+B_OBJS		= ${addprefix ${B_OBJ_DIR}/, ${notdir ${B_SRCS:.c=.o}}} $(GNL)
+
+B_NAME		= checker
+################################################################################
+CC			= cc
+
+CFLAGS		= -Wall -Wextra -Werror
+
+RM			= rm -rf
 
 all:		${NAME}
 
+$(OBJ_DIR)/%.o:	%.c $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
 ${NAME}:	${OBJS}
-#			ar -csr $@ $^
+	${CC} -o $@ $^
 
-# bonus:
-# 	make BONUS=1 ${NAME}
+${OBJ_DIR}:
+	mkdir ${OBJ_DIR}
 
-# .c.o:
-# 	${CC} ${CFLAGS} -I ${HEADER} -c $< -o ${<:.c=.o}
+bonus:		${B_NAME}
 
-# clean:
-# 			${RM} ${B_OBJS}
+$(B_OBJ_DIR)/%.o : %.c $(B_OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
 
-# fclean:		clean
-# 			${RM} ${NAME}
+${B_NAME}:	${B_OBJS}
+	${CC} -o $@ $^
 
-# re:			fclean all
+${B_OBJ_DIR}:
+	mkdir ${B_OBJ_DIR}
 
-# .PHONY:		all clean fclean re
+${GNL}:
+	$(MAKE) -C ${dir $(GNL)}
+
+clean:
+	${MAKE} -C ${dir $(GNL)} clean
+	${RM} ${OBJ_DIR} ${B_OBJ_DIR} ${GNL}
+
+fclean:		clean
+	${RM} ${NAME} ${B_NAME}
+
+re:
+	${MAKE} fclean
+	${MAKE} all
+
+.PHONY:		all clean fclean re bonus
