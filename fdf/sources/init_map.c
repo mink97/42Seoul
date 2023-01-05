@@ -6,13 +6,13 @@
 /*   By: mingkang <mingkang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 12:37:17 by mingkang          #+#    #+#             */
-/*   Updated: 2022/12/24 13:34:36 by mingkang         ###   ########.fr       */
+/*   Updated: 2022/12/26 10:40:10 by mingkang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	parse_map(char **argv, t_map *map, t_list **lst)
+static void	parse_map(char **argv, t_map *map, t_list **lst)
 {
 	int		i;
 	int		fd;
@@ -39,7 +39,7 @@ void	parse_map(char **argv, t_map *map, t_list **lst)
 	close(fd);
 }
 
-void	fill_node(t_point *node, char **strs, int x, int y)
+static void	fill_node(t_point *node, char **strs, int x, int y)
 {
 	char	**buf;
 
@@ -54,7 +54,7 @@ void	fill_node(t_point *node, char **strs, int x, int y)
 	free_strs(buf);
 }
 
-void	read_map(t_map *map, t_list **lst)
+static void	read_map(t_map *map, t_list **lst)
 {
 	int		i;
 	int		j;

@@ -6,7 +6,7 @@
 /*   By: mingkang <mingkang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 10:57:39 by mingkang          #+#    #+#             */
-/*   Updated: 2022/12/24 13:27:24 by mingkang         ###   ########.fr       */
+/*   Updated: 2022/12/25 14:12:28 by mingkang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ static void	rotate_y(t_point *point, double beta)
 
 	prev_x = point->x;
 	prev_z = point->z;
-	point->x = prev_x * cos(beta) + prev_z * sin(beta);
-	point->z = -prev_x * sin(beta) + prev_z * cos(beta);
+	point->x = prev_x * cos(beta) - prev_z * sin(beta);
+	point->z = prev_x * sin(beta) + prev_z * cos(beta);
 }
 
 static void	rotate_z(t_point *point, double alpha)
@@ -41,8 +41,8 @@ static void	rotate_z(t_point *point, double alpha)
 
 	prev_x = point->x;
 	prev_y = point->y;
-	point->x = prev_x * cos(alpha) - prev_y * sin(alpha);
-	point->y = prev_x * sin(alpha) + prev_y * cos(alpha);
+	point->x = prev_x * cos(alpha) + prev_y * sin(alpha);
+	point->y = -prev_x * sin(alpha) + prev_y * cos(alpha);
 }
 
 static void	change_projection(t_point *point, t_prjc prjc)
@@ -75,9 +75,9 @@ t_point	*get_vertex(t_point *point, t_data *data)
 	tmp->color = point->color;
 	tmp->x *= data->cam->zoom;
 	tmp->y *= data->cam->zoom;
-	rotate_z(tmp, data->cam->alpha);
-	rotate_x(tmp, data->cam->gamma);
 	rotate_y(tmp, data->cam->beta);
+	rotate_x(tmp, data->cam->gamma);
+	rotate_z(tmp, data->cam->alpha);
 	if (data->cam->prjc != PARALLEL)
 	{
 		change_projection(tmp, data->cam->prjc);

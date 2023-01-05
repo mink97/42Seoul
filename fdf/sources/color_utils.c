@@ -6,7 +6,7 @@
 /*   By: mingkang <mingkang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 10:57:23 by mingkang          #+#    #+#             */
-/*   Updated: 2022/12/24 13:19:53 by mingkang         ###   ########.fr       */
+/*   Updated: 2022/12/26 10:34:08 by mingkang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,4 @@ int	get_g(int trgb)
 int	get_b(int trgb)
 {
 	return (trgb & 0xFF);
-}
-
-void	ft_error(char *str)
-{
-	perror(str);
-	exit(EXIT_FAILURE);
 }

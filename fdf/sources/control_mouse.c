@@ -6,7 +6,7 @@
 /*   By: mingkang <mingkang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 10:57:28 by mingkang          #+#    #+#             */
-/*   Updated: 2022/12/24 15:07:11 by mingkang         ###   ########.fr       */
+/*   Updated: 2022/12/25 14:16:49 by mingkang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	mouse_move(int x, int y, void *vars)
 		}
 		else if (data->handle->wheel_hold == TRUE)
 		{
-			data->cam->beta += (x - data->handle->prev_x) * 0.004;
+			data->cam->beta += -(x - data->handle->prev_x) * 0.004;
 			data->cam->gamma += (y - data->handle->prev_y) * 0.004;
 		}
 	}
