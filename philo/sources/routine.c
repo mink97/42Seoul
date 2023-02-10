@@ -6,17 +6,31 @@
 /*   By: mingkang <mingkang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 09:25:22 by mingkang          #+#    #+#             */
-/*   Updated: 2023/02/10 12:43:48 by mingkang         ###   ########.fr       */
+/*   Updated: 2023/02/10 16:41:54 by mingkang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	pickup_fork(t_philo *philo, t_info *info, t_fork *fork)
+void	philo_dead(t_philo *philo, t_info *info, int now_time)
+{
+	pthread_mutex_lock(&info->dead_mutex);
+	if (info->is_dead == 0)
+	{
+		info->is_dead = 1;
+		pthread_mutex_lock(&info->text_mutex);
+		printf("%d %d is died\n", now_time - info->start_time, philo->num);
+		pthread_mutex_unlock(&info->text_mutex);
+	}
+	pthread_mutex_unlock(&info->dead_mutex);
+}
+
+int	pickup_fork(t_philo *philo, t_info *info, t_fork *fork)
 {
 	int	now_time;
 
-	now_time = gettime();
+	if (gettime(&now_time) != 0)
+		return (-1);
 	while (now_time - philo->last_eat_time < info->tm_die)
 	{
 		pthread_mutex_lock(&fork->fork_mutex);
@@ -28,21 +42,16 @@ void	pickup_fork(t_philo *philo, t_info *info, t_fork *fork)
 		}
 		pthread_mutex_unlock(&fork->fork_mutex);
 		usleep(50);
-		now_time = gettime();
+		if (gettime(&now_time) != 0)
+			return (-1);
 	}
-	if (gettime() - philo->last_eat_time >= info->tm_die) // 죽음.
-	{
-		pthread_mutex_lock(&info->dead_mutex);
-		if (info->is_dead == 0)
-		{
-			info->is_dead = 1;
-			pthread_mutex_lock(&info->text_mutex);
-			printf("%d %d is died\n", gettime() - info->start_time, philo->num);
-			pthread_mutex_unlock(&info->text_mutex);
-		}
-		pthread_mutex_unlock(&info->dead_mutex);
-	}
-	print_status(philo, info, TAKE_FORK);
+	if (gettime(&now_time) != 0)
+		return (-1);
+	if (now_time - philo->last_eat_time >= info->tm_die)
+		philo_dead(philo, info, now_time);
+	else if (print_status(philo, info, TAKE_FORK) != 0)
+		return (-1);
+	return (0);
 }
 
 void	putdown_fork(t_fork *fork)
@@ -52,16 +61,22 @@ void	putdown_fork(t_fork *fork)
 	pthread_mutex_unlock(&fork->fork_mutex);
 }
 
-void	try_eat(t_philo *philo, t_info *info)
+int	try_eat(t_philo *philo, t_info *info)
 {
-	pickup_fork(philo, info, philo->left_fork);
-	pickup_fork(philo, info, philo->right_fork);
-	print_status(philo, info, EATING);
+	if (pickup_fork(philo, info, philo->left_fork) != 0)
+		return (-1);
+	if (pickup_fork(philo, info, philo->right_fork) != 0)
+		return (-1);
+	if (print_status(philo, info, EATING) != 0)
+		return (-1);
 	philo->eat_count--;
-	philo->last_eat_time = gettime();
-	ft_sleep(philo, info, info->tm_eat);
+	if (gettime(&philo->last_eat_time) != 0)
+		return (-1);
+	if (ft_sleep(philo, info, info->tm_eat) != 0)
+		return (-1);
 	putdown_fork(philo->right_fork);
 	putdown_fork(philo->left_fork);
+	return (0);
 }
 
 void	*routine(void *data)
@@ -75,10 +90,14 @@ void	*routine(void *data)
 	i = 0;
 	while (philo->eat_count > 0 && check_dead(info) == 0)
 	{
-		try_eat(philo, info);
-		print_status(philo, info, SLEEPING);
-		ft_sleep(philo, info, info->tm_sleep);
-		print_status(philo, info, THINKING);
+		if (try_eat(philo, info) != 0)
+			return (NULL);
+		if (print_status(philo, info, SLEEPING) != 0)
+			return (NULL);
+		if (ft_sleep(philo, info, info->tm_sleep) != 0)
+			return (NULL);
+		if (print_status(philo, info, THINKING) != 0)
+			return (NULL);
 	}
 	return ((void *)philo);
 }
