@@ -6,7 +6,7 @@
 #    By: mingkang <mingkang@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/30 10:10:44 by mingkang          #+#    #+#              #
-#    Updated: 2023/01/10 19:15:54 by mingkang         ###   ########.fr        #
+#    Updated: 2023/02/13 10:18:22 by mingkang         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -108,7 +108,7 @@ ${B_OBJS_DIR}%.o:	${B_SRCS_DIR}%.c
 
 ${LIBFT}:
 	@echo "${LIBFT_NAME} : ${COLOR_YELLOW}creating...${COLOR_WHITE}"
-	@${MAKE} -sC ${LIBFT_DIR} bonus
+	@${MAKE} -sC ${LIBFT_DIR}
 	@echo "${LIBFT_NAME} : ${COLOR_GREEN}created!!${COLOR_WHITE}"
 
 clean:
