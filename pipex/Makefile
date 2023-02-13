@@ -6,7 +6,7 @@
 #    By: mingkang <mingkang@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/30 10:10:44 by mingkang          #+#    #+#              #
-#    Updated: 2023/01/05 16:26:57 by mingkang         ###   ########.fr        #
+#    Updated: 2023/01/10 19:15:54 by mingkang         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,7 +84,7 @@ all:		${NAME}
 ${NAME}:	${LIBFT} ${F_OBJS_DIR} ${F_OBJS}
 	@echo "\n${COLOR_WHITE}${NAME}: \
 	${COLOR_GREEN}objects were created${COLOR_WHITE}"
-	@${CC} ${CFLAGS} ${LIBFT} ${MLXFLAGS} ${F_OBJS} -o $@
+	@${CC} ${CFLAGS} ${LIBFT} ${F_OBJS} -o $@
 	@echo "${COLOR_LBLUE}${NAME}: finished!!${COLOR_WHITE}"
 
 bonus:
