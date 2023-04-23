@@ -1,0 +1,11 @@
+RF																phong
+A	0.15														255,255,255
+C	0,-2000,0				0,0,0			90
+L	0,-1000,0								0.8					255,255,255
+BG																xpm_files/galaxy.xpm
+sp	-400,0,700								300					xpm_files/fiery_planet.xpm
+sp	400,0,700								300					xpm_files/fiery_planet2.xpm
+sp	-800,0,0								300					xpm_files/green_planet.xpm
+sp	800,0,0									300					xpm_files/ice_planet.xpm
+sp	-400,0,-700								300					xpm_files/marble.xpm
+sp	400,0,-700								300					xpm_files/rock_planet.xpm

@@ -1,0 +1,5 @@
+RF															phong
+A	1.0														255,255,255
+C	0,-90,0				0,0,0			120
+L	45,-45,0							1					255,255,255
+sp	0,0,0								40					xpm_files/brick.xpm,xpm_files/brick_gray.xpm
